@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 from transformers import TrainingArguments, AutoModelForSequenceClassification, AutoTokenizer
 from transformers import Trainer
@@ -23,7 +24,7 @@ class Engine:
             "per_device_train_batch_size": trial.suggest_categorical("per_device_train_batch_size", [4, 8, 16, 32, 64]),
         }
 
-    def __init__(self, data, args, device="cuda:0"):
+    def __init__(self, data, args, device="cuda:0", model=None):
         self.model = None
         self.args = args
         self.trainer = None
@@ -31,10 +32,15 @@ class Engine:
         self.dataset = data
         self.results = None
         self.device = device
+        if model is not None:
+            self.load_model(model)
 
     def model_init(self):
         return AutoModelForSequenceClassification.from_pretrained(Engine.model_checkpoint, id2label=self.dataset.labels,
                                                                   num_labels=self.dataset.n_classes, return_dict=True)
+
+    def load_model(self, model):
+        pass
 
     def load_trainer(self, use_init=False):
         if use_init:
@@ -75,13 +81,17 @@ class Engine:
             run_name=opt_name,
         )
 
-    def train(self, epochs, seed=0, opt_name="test"):
-        self.load_train_args(opt_name,
-                             self.best_run.hyperparameters["learning_rate"],
-                             epochs,
-                             self.best_run.hyperparameters["per_device_train_batch_size"],
-                             True, seed)
-        self.load_trainer(True)
+    def train(self, epochs, seed=0, opt_name="test", args=None):
+        if args is None:
+            self.load_train_args(opt_name,
+                                 self.best_run.hyperparameters["learning_rate"],
+                                 epochs,
+                                 self.best_run.hyperparameters["per_device_train_batch_size"],
+                                 True, seed)
+            self.load_trainer(True)
+        else:
+            self.args = args
+            self.load_trainer(False)
 
         self.results = self.trainer.train()
         self.trainer.push_to_hub()
