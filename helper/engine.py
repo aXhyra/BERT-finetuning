@@ -25,7 +25,7 @@ class Engine:
             "per_device_train_batch_size": trial.suggest_categorical("per_device_train_batch_size", [4, 8, 16, 32, 64]),
         }
 
-    def __init__(self, data, args, device="cuda:0", model=None):
+    def __init__(self, data, args, device="cuda:0", model=None, name="test"):
         self.args = args
         self.trainer = None
         self.best_run = None
@@ -34,6 +34,7 @@ class Engine:
         self.device = device
         if model is not None:
             self.load_model(model)
+        self.name = name
         self.model = self.model_init()
 
     def model_init(self):
@@ -97,8 +98,11 @@ class Engine:
         try:
             self.trainer.push_to_hub()
         except Exception as e:
-            os.system('git push --force origin')
-            print(e)
+            os.system(f'cd {self.name} && git push --force origin')
+            try:
+                self.trainer.push_to_hub()
+            except Exception as e:
+                print(e)
         wandb.finish()
 
     def evaluate(self):
