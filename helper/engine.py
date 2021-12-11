@@ -97,6 +97,7 @@ class Engine:
         try:
             self.trainer.push_to_hub()
         except Exception as e:
+            os.system('git push --force origin')
             print(e)
         wandb.finish()
 
