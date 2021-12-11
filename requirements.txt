@@ -1,4 +1,4 @@
-pytorch
+torch
 wandb
 optuna
 transformers
