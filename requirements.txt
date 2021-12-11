@@ -1,0 +1,8 @@
+pytorch
+wandb
+optuna
+transformers
+datasets
+numpy
+requests
+subprocess
