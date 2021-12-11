@@ -4,6 +4,7 @@ from transformers import TrainingArguments, AutoModelForSequenceClassification, 
 from transformers import Trainer
 from datasets import load_metric
 import wandb
+import os
 
 
 class Engine:
@@ -93,6 +94,7 @@ class Engine:
             self.load_trainer(False)
 
         self.results = self.trainer.train()
+        os.system(f'git update-ref -d refs/heads/origin/main')
         self.trainer.push_to_hub()
         wandb.finish()
 
