@@ -96,8 +96,8 @@ class Engine:
         self.results = self.trainer.train()
         try:
             self.trainer.push_to_hub()
-        except:
-            pass
+        except Exception as e:
+            print(e)
         wandb.finish()
 
     def evaluate(self):
