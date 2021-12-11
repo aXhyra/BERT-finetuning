@@ -15,8 +15,17 @@ class LoginHelper:
                  wandb_save_models=False,
                  tokenizer_parallelism=False):
         self.username = 'hf_user'
-        self.hf_token = os.environ["hf_token"] if hf_token is None else hf_token
-        self.wandb_token = os.environ["wandb_token"] if wandb_token is None else wandb_token
+        try:
+            self.hf_token = os.environ["hf_token"] if hf_token is None else hf_token
+        except KeyError:
+            print('ERROR: The Huggingface "hf_token" has not been set as environment variable nor passed to this function.')
+            raise
+        try:
+            self.wandb_token = os.environ["wandb_token"] if wandb_token is None else wandb_token
+        except KeyError:
+            print('ERROR: The Wandb "wandb_token" has not been set as environment variable nor passed to this function.')
+            raise
+
         os.environ["hf_token"] = str(self.hf_token)
         os.environ["wandb_token"] = str(self.wandb_token)
         os.environ["TOKENIZERS_PARALLELISM"] = str(tokenizer_parallelism).lower()
