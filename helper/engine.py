@@ -25,7 +25,6 @@ class Engine:
         }
 
     def __init__(self, data, args, device="cuda:0", model=None):
-        self.model = None
         self.args = args
         self.trainer = None
         self.best_run = None
@@ -34,6 +33,7 @@ class Engine:
         self.device = device
         if model is not None:
             self.load_model(model)
+        self.model = self.model_init()
 
     def model_init(self):
         return AutoModelForSequenceClassification.from_pretrained(Engine.model_checkpoint, id2label=self.dataset.labels,
