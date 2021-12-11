@@ -94,7 +94,10 @@ class Engine:
             self.load_trainer(True)
 
         self.results = self.trainer.train()
-        self.trainer.push_to_hub()
+        try:
+            self.trainer.push_to_hub()
+        except:
+            pass
         wandb.finish()
 
     def evaluate(self):
