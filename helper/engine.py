@@ -81,8 +81,8 @@ class Engine:
             run_name=opt_name,
         )
 
-    def train(self, epochs, seed=0, opt_name="test", args=None):
-        if args is None:
+    def train(self, epochs, seed=0, opt_name="test", use_given_args=True):
+        if use_given_args:
             self.load_train_args(opt_name,
                                  self.best_run.hyperparameters["learning_rate"],
                                  epochs,
@@ -90,7 +90,6 @@ class Engine:
                                  True, seed)
             self.load_trainer(True)
         else:
-            self.args = args
             self.load_trainer(False)
 
         self.results = self.trainer.train()
