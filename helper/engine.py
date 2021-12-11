@@ -82,7 +82,7 @@ class Engine:
             run_name=opt_name,
         )
 
-    def train(self, epochs, seed=0, opt_name="test", use_given_args=True):
+    def train(self, epochs, seed=0, opt_name="test", use_given_args=False):
         if not use_given_args:
             self.load_train_args(opt_name,
                                  self.best_run.hyperparameters["learning_rate"],
@@ -91,10 +91,9 @@ class Engine:
                                  True, seed)
             self.load_trainer(True)
         else:
-            self.load_trainer(False)
+            self.load_trainer(True)
 
         self.results = self.trainer.train()
-        os.system(f'git update-ref -d refs/heads/origin/main')
         self.trainer.push_to_hub()
         wandb.finish()
 
