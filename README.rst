@@ -1,6 +1,9 @@
-# Finetuning DistilBERT for sentiment analysis on tweets
-## Advanced Topics in Machine Learning, 2021. 
-### Marco Latella, Pietro Tropeano, Alind Xhyra
+***************
+Finetuning DistilBERT for sentiment analysis on tweets
+***************
+
+Advanced Topics in Machine Learning, 2021. 
+Marco Latella, Pietro Tropeano, Alind Xhyra
 
 .. image:: https://colab.research.google.com/assets/colab-badge.svg
     :target: https://colab.research.google.com/github/aXhyra/BERT-finetuning/blob/master/notebook.ipynb
@@ -18,7 +21,9 @@ To perform the experimental phase, 3 different helper classes were created. It i
 
 To further readings please refer to the report present in the home of the project.
 
-## Used services
+***************
+Used services
+***************
 
 | Package | README |
 | ------ | ------ |
