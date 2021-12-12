@@ -1,10 +1,29 @@
 import numpy as np
+import requests
 import torch
 from transformers import TrainingArguments, AutoModelForSequenceClassification, AutoTokenizer
 from transformers import Trainer
 from datasets import load_metric
 import wandb
 import os
+
+from .dataset import Dataset
+
+MODEL_ENDPOINT = "https://huggingface.co/"
+
+
+def retrieve_hyperparameter_config(project):
+    lr = None
+    batch_size = None
+    r = requests.get(f"{MODEL_ENDPOINT}{project}/raw/main/README.md")
+    tmp = r.text.split("\n")
+    for line in tmp:
+        if "learning_rate" in line:
+            lr = float(line.split(": ")[1])
+        if "batch_size" in line:
+            batch_size = int(line.split(": ")[1])
+
+    return lr, batch_size
 
 
 class Engine:
@@ -25,6 +44,19 @@ class Engine:
             "per_device_train_batch_size": trial.suggest_categorical("per_device_train_batch_size", [4, 8, 16, 32, 64]),
         }
 
+    @staticmethod
+    def test_eval(model_path, task, compute_metrics):
+        dataset = Dataset(task, "distilbert-base-uncased")
+        trainer_eval = Trainer(
+            model=AutoModelForSequenceClassification.from_pretrained(model_path),
+            train_dataset=dataset.tokenized_dataset['train'],
+            eval_dataset=dataset.tokenized_dataset['validation'],
+            tokenizer=AutoTokenizer.from_pretrained(model_path),
+            compute_metrics=compute_metrics,
+        )
+
+        return trainer_eval.evaluate(dataset.tokenized_dataset["test"])
+
     def __init__(self, data, args, device="cuda:0", model=None, name="test"):
         self.args = args
         self.trainer = None
@@ -34,8 +66,10 @@ class Engine:
         self.device = device
         if model is not None:
             self.load_model(model)
-        else:
+        elif args is not None:
             self.model = self.model_init()
+        else:
+            self.model = None
         self.name = name
 
     def model_init(self):

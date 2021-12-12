@@ -1,4 +1,5 @@
 torch
+sklearn
 wandb
 optuna
 transformers

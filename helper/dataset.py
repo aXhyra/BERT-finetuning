@@ -1,8 +1,12 @@
 from transformers import AutoTokenizer
-from datasets import load_dataset
+from datasets import load_dataset, load_metric
 import matplotlib.pyplot as plt
 import numpy as np
 import requests
+
+
+def compute_metrics(metric):
+    return lambda eval_pred: load_metric(metric).compute(predictions=eval_pred[0].argmax(axis=-1), references=eval_pred[1], average="macro")
 
 
 class Dataset:
