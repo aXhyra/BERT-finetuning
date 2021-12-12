@@ -2,10 +2,10 @@
 ## Advanced Topics in Machine Learning, 2021. 
 ### Marco Latella, Pietro Tropeano, Alind Xhyra
 
-
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aXhyra/BERT-finetuning/blob/master/notebook.ipynb)
 
 The focus of this project is to fine-tune a DistilBERT  model over 4 different classification tasks on the tweet-eval dataset.
- 
+
 To perform the experimental phase, 3 different helper classes were created. It is possible to find such classes in the helper folder.
 - Service helper, to handle the login process in the used services 
 - Dataset helper, to load and work with different datasets
