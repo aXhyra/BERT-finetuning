@@ -8,6 +8,7 @@ import requests
 class Dataset:
     dataset = None
     tokenized_dataset = None
+    endpoint = "https://raw.githubusercontent.com/cardiffnlp/tweeteval/main/datasets/"
 
     def __init__(self, task, tokenizer_name, s_key1="text", s_key2=None):
         self.dataset_name = "tweet_eval"
@@ -24,8 +25,7 @@ class Dataset:
 
     def retrieve_labels(self):
 
-        r = requests.get(
-            "https://raw.githubusercontent.com/cardiffnlp/tweeteval/main/datasets/" + self.task + "/mapping.txt")
+        r = requests.get(f'{self.endpoint}{self.task}/mapping.txt')
         tmp = r.text.split("\n")
         for el in tmp:
             if len(el) > 1:

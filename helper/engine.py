@@ -34,15 +34,13 @@ class Engine:
         self.device = device
         if model is not None:
             self.load_model(model)
+        else:
+            self.model = self.model_init()
         self.name = name
-        self.model = self.model_init()
 
     def model_init(self):
         return AutoModelForSequenceClassification.from_pretrained(Engine.model_checkpoint, id2label=self.dataset.labels,
                                                                   num_labels=self.dataset.n_classes, return_dict=True)
-
-    def load_model(self, model):
-        pass
 
     def load_trainer(self, use_init=False):
         if use_init:
