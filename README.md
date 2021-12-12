@@ -2,11 +2,10 @@
 ## Advanced Topics in Machine Learning, 2021. 
 ### Marco Latella, Pietro Tropeano, Alind Xhyra
 
-
-.. |colab1| image:: https://colab.research.google.com/assets/colab-badge.svg
+.. image:: https://colab.research.google.com/assets/colab-badge.svg
     :target: https://colab.research.google.com/github/aXhyra/BERT-finetuning/blob/master/notebook.ipynb
-    :alt: Open In Colab
-
+        :alt: Open In Colab
+        
 
 The focus of this project is to fine-tune a DistilBERT  model over 4 different classification tasks on the tweet-eval dataset.
  
