@@ -17,7 +17,7 @@ To further readings please refer to the report present in the home of the projec
 
 ## Used services
 
-| Plugin | README |
+| Package | README |
 | ------ | ------ |
 | Hugging Face | https://huggingface.co|
 | Wandb | https://wandb.ai/site|
