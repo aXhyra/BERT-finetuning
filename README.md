@@ -11,7 +11,7 @@ To perform the experimental phase, 3 different helper classes were created. It i
 - Dataset helper, to load and work with different datasets
 - Engine helper, to perform optimization and training on the chosed models
 
-## More informations
+## More information
 
 To further readings please refer to the report present in the home of the project.
 
