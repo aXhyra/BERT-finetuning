@@ -100,6 +100,7 @@ class Engine:
         self.args = TrainingArguments(
             opt_name,
             seed=seed,
+            logging_steps=2,
             evaluation_strategy="epoch",
             save_strategy="epoch",
             learning_rate=lr,
