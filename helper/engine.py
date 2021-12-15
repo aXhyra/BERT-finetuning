@@ -126,6 +126,7 @@ class Engine:
             self.load_trainer(True)
         else:
             self.load_trainer(True)
+            setattr(self.args, "seed", seed)
 
         self.results = self.trainer.train()
         try:
